@@ -12,5 +12,4 @@ Tags:
 - @PULLED: uuid-IsoWorld@PUSHED@PULL. IsoWorlds-SAS pulled successfully, then replaced @PUSHED@PULL tag with @PULLED tag so the IsoWorlds plugin is able to detect a successfully pulled IsoWorld.
 - No tag: uuid-IsoWorld, plugin deleted @PULLED tag and will load it on server.
 
-On server start, IsoWorlds plugin will move every IsoWorld folder in ISOWORLDS-SAS FOLDER to prevent the loading. Then it will renamed every untagged IsoWorlds with @PUSH TAG, then IsoWorlds-SAS will push them.
-
+On server start, IsoWorlds plugin will move every IsoWorld folder in ISOWORLDS-SAS FOLDER to prevent the loading. Then it will rename every untagged IsoWorlds with @PUSH TAG, then IsoWorlds-SAS will push them.
