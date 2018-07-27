@@ -1,9 +1,9 @@
-IsoWorlds
+Isoworlds
 ============
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
-This script handling IsoWorlds storage by tag system. Looping every server folders and every IsoWorlds, checking name and handling tag.
+This script handling Isoworlds storage by tag system. Looping every server folders and every Isoworlds, checking name and handling tag.
 
 | Tag        | Folder name | Description  |
 | ------------- | ------------- | ------------- |
@@ -12,4 +12,5 @@ This script handling IsoWorlds storage by tag system. Looping every server folde
 | `@PUSHED@PULL` | `uuid-Isoworld@PUSHED@PULL` | A player wants to go to this Isoworld, preparing for pull process |
 | `No tag` | `uuid-Isoworld` | When world is ready, we set the it to his original name  |
 
-On server start, IsoWorlds plugin will move every IsoWorld folder in ISOWORLDS-SAS FOLDER to prevent the loading. Then it will rename every untagged IsoWorlds with @PUSH TAG, then IsoWorlds-SAS will push them.
+Sponge only: On server start, Isoworlds plugin will move every IsoWorld folder in Isoworlds-SAS folder to prevent the loading. Then it will rename every untagged Isoworlds with @PUSH TAG, then Isoworlds-SAS will push them.
+So when a server starts, there is no Isoworld to save space.
