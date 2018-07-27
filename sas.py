@@ -1,5 +1,5 @@
 #
-# This file is part of IsoWorlds, licensed under the MIT License (MIT).
+# This file is part of Isoworlds, licensed under the MIT License (MIT).
 #
 # Copyright (c) Edwin Petremann <https://github.com/Isolonice/>
 # Copyright (c) contributors
@@ -42,25 +42,30 @@ class KThread(threading.Thread):
         self.value = True
 
     def run(self):
-        # If already handled by IsoWorlds plugin, deleting region folder just in case (if loaded by another unlegit way)
-        if "-IsoWorld@PUSHED@PULL" in (self.dirs2[self.k]):
+        # If already handled by Isoworlds plugin, deleting region folder just in case (if loaded by another unlegit way)
+        if "-Isoworld@PUSHED@PULL" in (self.dirs2[self.k]):
             name = self.dirs2[self.k].split("@PUSHED@PULL")
             name = name[0]
-            print("IsoWorld pull rapporter détécté: " + self.dirs2[self.k])
+            print("Isoworld pull process detected: " + self.dirs2[self.k])
+			# Remove region folder of world folder (just in case), because we'll pull it. Sometime there are unlegit way to load and isoworld that load new region files
             cmd = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region'
-	    print(cmd)
-	    print(csf(cmd))
-            cmd2 = 'rsync -asv matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/'
+		    print(cmd)
+		    print(csf(cmd))
+			# Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld folder
+            cmd2 = 'rsync -asv matterr:/Isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/'
             print(cmd2)
             print(csf(cmd2))
+			# Region folder pulled with succes, so we remove tags (@PUSHED@PULL) and set to orignal name ( uuid-Isoworld )
             cmd3 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name
             print(cmd3)
             print(csf(cmd3))
+			# Getting owner server.properties to add the same on pulled folder
             cmd4 = 'stat -c %u /servers/' + self.dirs[self.j] + '/server.properties'
             print(cmd4)
             print(csf(cmd4))
             owner = os.popen(cmd4).read().split("\n")
             owner = owner[0]
+			# Setup rights on folder
             cmd5 = 'chown -R ' + owner + ':' + owner + ' /servers/' + self.dirs[self.j]
             print(cmd5)
             print(csf(cmd5))
@@ -68,33 +73,36 @@ class KThread(threading.Thread):
             self.value = False
             return False
             # If already handled (pushed)
-        if "-IsoWorld@PUSHED" in (self.dirs2[self.k]):
+        if "-Isoworld@PUSHED" in (self.dirs2[self.k]):
             self.value = False
             return False
-        if "-IsoWorld@PUSH" in (self.dirs2[self.k]):
-            # Getting real name of an IsoWorld (without tags, uuid-IsoWorld)
+        if "-Isoworld@PUSH" in (self.dirs2[self.k]):
+            # Getting real name of an Isoworld (without tags, uuid-Isoworld)
             name = self.dirs2[self.k].split("@PUSH")
             name = name[0]
             # Create path even if it exists
-            mkdir = 'ssh matterr mkdir -p /isoworlds/' + self.dirs[self.j] + '/' + name
+            mkdir = 'ssh matterr mkdir -p /Isoworlds/' + self.dirs[self.j] + '/' + name
             print(csf(mkdir))
-            print("IsoWorld à push détécté: " + self.dirs2[self.k])
-            # Copy local region folder to remote server with /isoworlds/uuidSrv/uuidWorld/ path
-            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region' + ' matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/'
+            print("Isoworld à push détécté: " + self.dirs2[self.k])
+            # Copy local region folder to remote server with /Isoworlds/uuid-server/uuid-isoworld/ path
+            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region' + ' matterr:/Isoworlds/' + self.dirs[self.j] + '/' + name + '/'
             print(cmd2)
             print(csf(cmd2))
-            # Deleting local region folder
+            # Deleting local region folder after push
             cmd3 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region'
             print(cmd3)
             print(csf(cmd3))
-            cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
+            # Add @PUSHED tag to Isoworld
+			cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
             print(cmd4)
             print(csf(cmd4))
+			# Getting right of server.properties
             cmd5 = 'stat -c %u /servers/' + self.dirs[self.j] + '/server.properties'
             print(cmd5)
             print(csf(cmd5))
             owner = os.popen(cmd5).read().split("\n")
             owner = owner[0]
+			# Setup rights
             cmd6 = 'chown -R ' + owner + ':' + owner + ' /servers/' + self.dirs[self.j]
             print(cmd6)
             print(csf(cmd6))
@@ -120,7 +128,7 @@ def push():
 	cmd = 'ls /servers/'
     dirs = os.popen(cmd).read().split("\n")
 
-    # Getting every IsoWorlds folder for each server folders
+    # Getting every Isoworlds folder for each server folders
     for j in range(len(dirs)):
         if dirs[j][:3] == "aremettredev" or dirs[j][:3] == "" or dirs[j][:3] == "OLD":
             continue
