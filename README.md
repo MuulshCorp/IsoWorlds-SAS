@@ -4,7 +4,13 @@ Isoworlds
 
 
 This script handling Isoworlds storage by tag system. Looping every server folders and every Isoworlds, checking name and handling tag.
+Run this on the directory that contains your server folder.
+Remote server folder path: /Isoworlds
+Servers path: /servers
 
+Run this on the directory that contains your server folders ( /servers/ in this case ).
+
+Remote server folder path: /Isoworlds
 | Tag        | Folder name | Description  |
 | ------------- | ------------- | ------------- |
 | `@PUSH` | `uuid-Isoworld@PUSH` | If a world has been inactive for 15 minutes, preparing for push process |
