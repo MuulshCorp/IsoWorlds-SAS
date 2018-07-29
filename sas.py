@@ -47,29 +47,29 @@ class KThread(threading.Thread):
             name = self.dirs2[self.k].split("@PUSHED@PULL")
             name = name[0]
             print("Isoworld pull process detected: " + self.dirs2[self.k])
-			# Remove region folder of world folder (just in case), because we'll pull it. Sometime there are unlegit way to load and isoworld that load new region files
+            # Remove region folder of world folder (just in case), because we'll pull it. Sometime there are unlegit way to load and isoworld that load new region files
             cmd = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region'
-		    print(cmd)
-		    print(csf(cmd))
-			# Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld folder
+            print(cmd)
+            print(csf(cmd))
+            # Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld folder
             cmd1 = 'rsync -asv matterr:/Isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/'
             print(cmd1)
             print(csf(cmd1))
-			# Region folder pulled with succes, so we remove tags (@PUSHED@PULL) and set to orignal name ( uuid-Isoworld )
-			# To prevent some case of corruption (moving tagged folder in untagged folder), we try to remove folder
+            # Region folder pulled with succes, so we remove tags (@PUSHED@PULL) and set to orignal name ( uuid-Isoworld )
+            # To prevent some case of corruption (moving tagged folder in untagged folder), we try to remove folder
             cmd2 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k]
-		    print(cmd2)
-			print(csf(cmd2)
+            print(cmd2)
+            print(csf(cmd2)
             cmd3 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name
             print(cmd3)
             print(csf(cmd3))
-			# Getting owner server.properties to add the same on pulled folder
+            # Getting owner server.properties to add the same on pulled folder
             cmd4 = 'stat -c %u /servers/' + self.dirs[self.j] + '/server.properties'
             print(cmd4)
             print(csf(cmd4))
             owner = os.popen(cmd4).read().split("\n")
             owner = owner[0]
-			# Setup rights on folder
+            # Setup rights on folder
             cmd5 = 'chown -R ' + owner + ':' + owner + ' /servers/' + self.dirs[self.j]
             print(cmd5)
             print(csf(cmd5))
@@ -97,16 +97,16 @@ class KThread(threading.Thread):
             print(cmd3)
             print(csf(cmd3))
             # Add @PUSHED tag to Isoworld
-			cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
+            cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
             print(cmd4)
             print(csf(cmd4))
-			# Getting right of server.properties
+            # Getting right of server.properties
             cmd5 = 'stat -c %u /servers/' + self.dirs[self.j] + '/server.properties'
             print(cmd5)
             print(csf(cmd5))
             owner = os.popen(cmd5).read().split("\n")
             owner = owner[0]
-			# Setup rights
+            # Setup rights
             cmd6 = 'chown -R ' + owner + ':' + owner + ' /servers/' + self.dirs[self.j]
             print(cmd6)
             print(csf(cmd6))
@@ -129,7 +129,7 @@ def csf(cmd):
 
 def push():
     # Getting every server folders splitted by line returns
-	cmd = 'ls /servers/'
+    cmd = 'ls /servers/'
     dirs = os.popen(cmd).read().split("\n")
 
     # Getting every Isoworlds folder for each server folders
