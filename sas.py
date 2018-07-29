@@ -43,7 +43,8 @@ class KThread(threading.Thread):
 
     def run(self):
         # If already handled by Isoworlds plugin, deleting region folder just in case (if loaded by another unlegit way)
-        if "-Isoworld@PUSHED@PULL" in (self.dirs2[self.k]):
+        
+        if "@PUSHED@PULL" in (self.dirs2[self.k]):
             name = self.dirs2[self.k].split("@PUSHED@PULL")
             name = name[0]
             print("Isoworld pull process detected: " + self.dirs2[self.k])
@@ -52,7 +53,7 @@ class KThread(threading.Thread):
             print(cmd)
             print(csf(cmd))
             # Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld folder
-            cmd1 = 'rsync -asv matterr:/Isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/'
+            cmd1 = 'rsync -asv matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/'
             print(cmd1)
             print(csf(cmd1))
             # Region folder pulled with succes, so we remove tags (@PUSHED@PULL) and set to orignal name ( uuid-Isoworld )
@@ -77,19 +78,19 @@ class KThread(threading.Thread):
             self.value = False
             return False
             # If already handled (pushed)
-        if "-Isoworld@PUSHED" in (self.dirs2[self.k]):
+        if "@PUSHED" in (self.dirs2[self.k]):
             self.value = False
             return False
-        if "-Isoworld@PUSH" in (self.dirs2[self.k]):
+        if "@PUSH" in (self.dirs2[self.k]):
             # Getting real name of an Isoworld (without tags, uuid-Isoworld)
             name = self.dirs2[self.k].split("@PUSH")
             name = name[0]
             # Create path even if it exists
-            mkdir = 'ssh matterr mkdir -p /Isoworlds/' + self.dirs[self.j] + '/' + name
+            mkdir = 'ssh matterr mkdir -p /isoworlds/' + self.dirs[self.j] + '/' + name
             print(csf(mkdir))
             print("Isoworld push process detected: " + self.dirs2[self.k])
             # Copy local region folder to remote server with /Isoworlds/uuid-server/uuid-isoworld/ path
-            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region' + ' matterr:/Isoworlds/' + self.dirs[self.j] + '/' + name + '/'
+            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region' + ' matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/'
             print(cmd2)
             print(csf(cmd2))
             # Deleting local region folder after push
