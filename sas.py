@@ -52,10 +52,10 @@ class KThread(threading.Thread):
             cmd = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region'
             print(cmd)
             print(csf(cmd))
-			# Add new tag @PULL@PROCESSING to avoid override on new loop
-			cmdProcessing = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING'
-			print(cmd)
-			print(csf(cmd))
+            # Add new tag @PULL@PROCESSING to avoid override on new loop
+            cmdProcessing = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING'
+            print(cmd)
+            print(csf(cmd))
             # Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld@PUSHED@PULL folder
             cmd1 = 'rsync -asv matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING/'
             print(cmd1)
@@ -122,6 +122,7 @@ class KThread(threading.Thread):
 # Shell cmd execution
 def subprocess_cmd(command):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
     proc_stdout = process.communicate()[0].strip()
 
 # Check callback
