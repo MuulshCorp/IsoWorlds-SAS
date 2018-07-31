@@ -54,8 +54,8 @@ class KThread(threading.Thread):
             print(csf(cmd))
             # Add new tag @PULL@PROCESSING to avoid override on new loop
             cmdProcessing = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING'
-            print(cmd)
-            print(csf(cmd))
+            print(cmdProcessing)
+            print(csf(cmdProcessing))
             # Copy region folder on remove server ( /Isoworlds/uuid-server/uuid-Isoworld/region ) to local uuid-Isoworld@PUSHED@PULL folder
             cmd1 = 'rsync -asv matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/region' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING/'
             print(cmd1)
@@ -93,16 +93,20 @@ class KThread(threading.Thread):
             mkdir = 'ssh matterr mkdir -p /isoworlds/' + self.dirs[self.j] + '/' + name
             print(csf(mkdir))
             print("Isoworld push process detected: " + self.dirs2[self.k])
+            # Add new tag @PUUSH@PROCESSING to avoid override on new loop
+            cmdProcessing = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSH@PROCESSING'
+            print(cmdProcessing)
+            print(csf(cmdProcessing))
             # Copy local region folder to remote server with /Isoworlds/uuid-server/uuid-isoworld/ path
-            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region' + ' matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/'
+            cmd2 = 'rsync -azv /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSH@PROCESSING' + '/region' + ' matterr:/isoworlds/' + self.dirs[self.j] + '/' + name + '/'
             print(cmd2)
             print(csf(cmd2))
             # Deleting local region folder after push
-            cmd3 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + '/region'
+            cmd3 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSH@PROCESSING' + '/region'
             print(cmd3)
             print(csf(cmd3))
             # Add @PUSHED tag to Isoworld
-            cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + self.dirs2[self.k] + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
+            cmd4 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSH@PROCESSING' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PUSHED'
             print(cmd4)
             print(csf(cmd4))
             # Getting right of server.properties
@@ -167,4 +171,4 @@ if __name__ == "__main__":
         start_time = time.time()
         push()
         print("--- %s secondes ---" % (time.time() - start_time))
-        time.sleep(10)
+        time.sleep(5)
