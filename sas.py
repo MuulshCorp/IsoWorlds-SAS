@@ -44,6 +44,9 @@ class KThread(threading.Thread):
     def run(self):
         # If already handled by Isoworlds plugin, deleting region folder just in case (if loaded by another unlegit way)
         
+        if "@PROCESSING" in (self.dirs2[self.k]):
+            self.value = False
+            return False
         if "@PUSHED@PULL" in (self.dirs2[self.k]):
             name = self.dirs2[self.k].split("@PUSHED@PULL")
             name = name[0]
