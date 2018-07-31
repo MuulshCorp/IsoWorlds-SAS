@@ -62,7 +62,7 @@ class KThread(threading.Thread):
             print(csf(cmd1))
             # Region folder pulled with succes, so we remove tags (@PUSHED@PULL) and set to orignal name ( uuid-Isoworld )
             # To prevent some case of corruption (moving tagged folder in untagged folder), we try to remove folder
-            cmd2 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING'
+            cmd2 = 'rm -Rf /servers/' + self.dirs[self.j] + '/Isolonice/' + name
             print(cmd2)
             print(csf(cmd2))
             cmd3 = 'mv /servers/' + self.dirs[self.j] + '/Isolonice/' + name + '@PULL@PROCESSING' + ' /servers/' + self.dirs[self.j] + '/Isolonice/' + name
